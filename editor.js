@@ -103,11 +103,3 @@ p._routes[p._routes.length - 1] = notFound
 
 p.navigateTo('');
 p.navigateTo('newPaint');
-
-/*
-echtesGrau.click(function(ev) {
-  this.$container.find('.paint-color-button').removeClass('paint-active');
-  ev.currentTarget.classList.add('paint-active');
-  this.setColor(ev.currentTarget.dataset.color);
-}.bind(p.currentView));
-*/
