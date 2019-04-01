@@ -42,7 +42,9 @@ newPaint = p.View.Paint.extend({
 
       switch (this.tool) {
         case this.tools.line:
-          this.toolProps.startPoint = {x: p.x, y: p.y};
+          if (p.x <= this.canvas.width && p.y <= this.canvas.height) {
+            this.toolProps.startPoint = {x: p.x, y: p.y};
+          }
           break;
         default:
       }
@@ -56,8 +58,12 @@ newPaint = p.View.Paint.extend({
     this.toolProps = {};
   },
 
-  render: function() {
+  load: function() {
     $.extend(this.tools, this.extraTools),
+    p.View.Paint.prototype.load.bind(this)();
+  },
+
+  render: function() {
     p.View.Paint.prototype.render.bind(this)();
 
     var lastPaintTool = this.$container.find('.paint-tool:last');
