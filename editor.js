@@ -1,4 +1,6 @@
-lineToolImage = $('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M 379.31185,67.584698 82.96249,388.47905 v 0 C -150.06273,432.48423 182.97271,626.18774 149.7,429.03751 v 0 L 429.17468,123.48377 C 634.7821,106.57214 391.12,-105.49005 379.31185,67.584698 Z" fill="currentColor"></path></svg> ');
+buttonIcons = {
+  line: $('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M 379.31185,67.584698 82.96249,388.47905 v 0 C -150.06273,432.48423 182.97271,626.18774 149.7,429.03751 v 0 L 429.17468,123.48377 C 634.7821,106.57214 391.12,-105.49005 379.31185,67.584698 Z" fill="currentColor"></path></svg>'),
+}
 
 
 newPaint = p.View.Paint.extend({
@@ -25,7 +27,6 @@ newPaint = p.View.Paint.extend({
         break;
       case this.tools.line:
         this.lastPaintPos = this.toolProps.startPoint;
-        this.toolProps.startPoint = {x: p.x, y: p.y};
         this.painting = true;
         this.paint(p.x, p.y);
         break;
@@ -33,6 +34,21 @@ newPaint = p.View.Paint.extend({
         this.painting = true;
         this.paint(p.x, p.y);
     }
+  },
+
+  mouseUp: function(ev) {
+      ev.preventDefault();
+      var p = this.getInternalPosition(ev.clientX, ev.clientY);
+
+      switch (this.tool) {
+        case this.tools.line:
+          this.toolProps.startPoint = {x: p.x, y: p.y};
+          break;
+        default:
+      }
+      this.historyAdd();
+      this.painting = false;
+      this.lastPaintPos = null;
   },
 
   setTool: function(name) {
@@ -57,7 +73,7 @@ newPaint = p.View.Paint.extend({
         this.setTool(ev.currentTarget.dataset.tool);
       }.bind(this));
 
-      button.append(lineToolImage);
+      button.append(buttonIcons[name]);
       if (i == Object.keys(this.extraTools).length) {
         button.addClass('paint-button-spacing');
       }
