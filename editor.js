@@ -45,7 +45,11 @@ newPaint = p.View.Paint.extend({
       switch (this.tool) {
         case this.tools.line:
           if (p.x <= this.canvas.width && p.y <= this.canvas.height) {
-            this.toolProps.startPoint = {x: p.x, y: p.y};
+            if (ev.button == 0) {
+              this.toolProps.startPoint = {x: p.x, y: p.y};
+            } else {
+              this.toolProps.startPoint = null;
+            }
           }
           break;
         default:
