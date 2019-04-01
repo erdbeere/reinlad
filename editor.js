@@ -27,8 +27,10 @@ newPaint = p.View.Paint.extend({
         break;
       case this.tools.line:
         this.lastPaintPos = this.toolProps.startPoint;
-        this.painting = true;
-        this.paint(p.x, p.y);
+        if (ev.button == 0) {
+          this.painting = true;
+          this.paint(p.x, p.y);
+        }
         break;
       default:
         this.painting = true;
