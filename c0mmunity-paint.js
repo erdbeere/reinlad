@@ -71,6 +71,14 @@ newPaint = p.View.Paint.extend({
 
   render: function() {
     p.View.Paint.prototype.render.bind(this)();
+    $('#load-c0mmunity-paint').off();
+    $('#load-c0mmunity-paint').text('pr0 Reinlader reinladen');
+    $('#load-c0mmunity-paint').click(ev => {
+      if (this.isBlank || confirm('Achtung, nicht pfostierte Änderungen gehen verloren!')) {
+          p.navigateTo('paint');
+      }
+      return false;
+    })
 
     var lastPaintTool = this.$container.find('.paint-tool:last');
 
@@ -104,6 +112,3 @@ p._routes[p._routes.length - 1] = notFound
 p.navigateTo('');
 p.navigateTo('c0mmunityReinlader');
 
-$('#load-c0mmunity-paint').text = 'pr0 Reinlader reinladen';
-$('#load-c0mmunity-paint').click(ev => {
-})
