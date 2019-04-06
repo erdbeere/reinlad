@@ -390,11 +390,9 @@ p.View.Paint = p.View.Base.extend({
             this.animationGenerateGIFNow(this.submitGIF.bind(this));
             return false;
         }
-        var data = {
-            tags: this.$container.find('.upload-tagsinput').val(),
-            imageData: this.canvas.toDataURL("image/png")
-        };
-        p.api.post('items.post', data, this.posted.bind(this));
+        this.canvas.toBlob(imageData => {
+          this.submitFile(imageData);
+        });
         return false;
     },
     submitGIF: function() {
@@ -402,23 +400,35 @@ p.View.Paint = p.View.Base.extend({
             this.postError('GIF zu groß. Max 8mb');
             return false;
         }
+        this.submitFile(this.animationBlob);
+        return false;
+    },
+    submitFile: function(file) {
         var formData = new FormData();
-        formData.append('gif', this.animationBlob);
-        formData.append('_nonce', p.user.id.substr(0, 16));
-        formData.append('tags', this.$container.find('.upload-tagsinput').val());
+        formData.append('image', file);
         var req = new XMLHttpRequest();
         req.onload = function(ev) {
-            var response = JSON.parse(req.responseText);
-            this.posted(response);
+            this.uploadComplete(req);
         }
         .bind(this);
         req.onerror = function(ev) {
             this.postError('Serverfehler :/');
         }
         .bind(this);
-        req.open('POST', CONFIG.API.ENDPOINT + 'items/post');
+        req.open('POST', CONFIG.API.ENDPOINT + 'items/upload');
         req.send(formData);
-        return false;
+    },
+    uploadComplete: function(req) {
+        if (req.status !== 200) {
+            this.postError('Serverfehler :/');
+            return;
+        }
+        var response = JSON.parse(req.responseText);
+        var data = {
+            tags: this.$container.find('.upload-tagsinput').val(),
+            key: response.key
+        };
+        p.api.post('items.post', data, this.posted.bind(this));
     },
     postError: function(err) {
         this.postInProgress = false;
