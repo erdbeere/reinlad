@@ -10,7 +10,7 @@ newPaint = p.View.Paint.extend({
   extraTools: {
     line: {
       name: 'Linie',
-      path: 'media/paint/pencil.png',
+      path: 'https://erdbeere.github.io/reinlad/media/paint/pencil.png',
       width: 120,
       height: 40,
       alpha: 1,
@@ -94,7 +94,7 @@ newPaint = p.View.Paint.extend({
   }
 });
 
-p.addRoute(newPaint, 'newPaint');
+p.addRoute(newPaint, 'c0mmunityReinlader');
 
 // put 404 route at the end
 notFound = p._routes[p._routes.length - 2]
@@ -102,4 +102,8 @@ p._routes[p._routes.length - 2] = p._routes[p._routes.length - 1]
 p._routes[p._routes.length - 1] = notFound
 
 p.navigateTo('');
-p.navigateTo('newPaint');
+p.navigateTo('c0mmunityReinlader');
+
+$('#load-c0mmunity-paint').text = 'pr0 Reinlader reinladen';
+$('#load-c0mmunity-paint').click(ev => {
+})
