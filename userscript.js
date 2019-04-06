@@ -789,8 +789,12 @@ $('head').append(`<style type="text/css">
   }
 
   .paint-animation-frame-duration {
-    width: 140px;
+    width: 160px;
     padding: 5px;
+  }
+
+  .paint-duration {
+    width: 100px;
   }
 
   .paint-animation-only, .paint-animation-preview {
