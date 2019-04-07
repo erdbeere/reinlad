@@ -748,70 +748,114 @@ uploadLink.attr('title', 'Reinlad erstellen');
 uploadLink.html(reinladSVG);
 uploadLink.removeClass('pict');
 
-// Oh neim! I han vergessen die pr0gramm.min.css zu kopierens.
-// Nu muss schmuser selber reinlads huebsch bekommen :(
-
 $('head').append(`<style type="text/css">
-  .paint-button {
-    width: 50px;
-    height: 55px;
-    background: #555;
-    border-bottom: 5px solid #444;
-    color: #fff;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-  .paint-button svg {
-    position: relative;
-    height: 40px;
-    width: 40px;
-    top: 5px;
-    left: 5px;
-  }
-  .paint-pallete {
-    display: flex;
-    margin-bottom: 8px;
-  }
-  .paint-colors {
-    display: inline-block;
-  }
-  .paint-color-button {
-    width: 10px;
-    height: 55px;
-    display: inline-block;
-    border-bottom: 5px solid #444;
-    cursor: pointer;
-  }
-  .paint-active {
-    border-bottom: 5px solid #ababab;
-  }
-  .paint-button-spacing {
-    margin-right: 15px;
-  }
-
-  .paint-canvas-container {
-    text-align: center;
-  }
-
-  .paint-animation-timeline canvas {
-    width: 100px;
-    margin: 0 2px;
-  }
-
-  .paint-animation-frame-duration {
-    width: 160px;
-    padding: 5px;
-  }
-
-  .paint-duration {
-    width: 100px;
-  }
-
-  .paint-animation-only, .paint-animation-preview {
-    display: none;
-  }
-
-  .animation .paint-animation-only {
-    display: block;
-  }
-  </style>`);
+    .paint-canvas-container{
+        text-align:center;
+    }
+    #paint-canvas{
+        max-width:100%;
+        -webkit-touch-callout:none !important;
+        touch-action:none;
+    }
+    div.paint-pallete{
+        margin:4px 0 8px 0;
+    }
+    div.paint-button{
+        width:58px;
+        height:60px;
+        float:left;
+        margin:0 4px 0 0;
+        padding:4px 8px 12px 8px;
+        background:#555;
+        border-bottom:8px solid #444;
+        color:#fff;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -khtml-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
+    }
+    div.paint-button-spacing{
+        margin-right:20px;
+    }
+    div.paint-button svg{
+        display:block;
+    }
+    div.paint-button:hover{
+        cursor:pointer;
+        background-color:#666;
+        border-bottom:6px solid #555;
+        height:58px;
+        margin-top:2px;
+    }
+    div.paint-color-button{
+        width:12px;
+        height:60px;
+        display:block;
+        float:left;
+        margin:0;
+        border-bottom:8px solid #444;
+        background-color:#f0f;
+    }
+    div.paint-color-button:hover{
+        cursor:pointer;
+        height:58px;
+        border-bottom:6px solid #555;
+        margin-top:2px;
+    }
+    div.paint-color-button.paint-active, div.paint-button.paint-active, div.paint-animation-timeline canvas.paint-active{
+        border-bottom-color:#aaa;
+    }
+    .paint-animation-only{
+        display:none;
+    }
+    img.paint-animation-preview{
+        display:none;
+    }
+    div.paint-container.animation .paint-animation-only{
+        display:block;
+    }
+    div.paint-animation-timeline{
+        background-color:#222;
+        height:64px;
+        margin-bottom:4px;
+    }
+    div.paint-animation-frame{
+    }
+    div.paint-animation-timeline canvas{
+        width:114px;
+        height:64px;
+        cursor:pointer;
+        float:left;
+        margin:0 2px 0 0;
+        background:#555;
+        border-bottom:8px solid #444;
+        color:#fff;
+    }
+    div.paint-animation-timeline canvas:hover{
+        border-bottom:8px solid #555;
+    }
+    div.paint-button.paint-animation-frame-duration{
+        cursor:auto;
+        width:auto;
+        font-weight:bold;
+    }
+    div.paint-button.paint-animation-frame-duration:hover{
+        cursor:auto;
+        background-color:#666;
+        border-bottom:8px solid #555;
+        height:58px;
+        margin-top:0px;
+    }
+    input.paint-duration{
+        background:transparent;
+        font-size:16px;
+        font-weight:bold;
+    }
+    input.paint-duration:invalid{
+        box-shadow:none;
+    }
+    .paint-animation-info{
+        float:right;
+    }
+</style>`);
