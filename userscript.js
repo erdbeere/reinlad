@@ -88,11 +88,11 @@ p.View.Paint = p.View.Base.extend({
         this.parent();
         this.canvas = this.$container.find('#paint-canvas')[0];
         this.ctx = this.canvas.getContext('2d');
-        this.canvas.getContext = this.except.bind(this);
+        //this.canvas.getContext = this.except.bind(this);
         this.ctx.fillStyle = '#fff';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillPath = this.ctx.drawImage;
-        this.ctx.drawImage = this.except.bind(this);
+        //this.ctx.drawImage = this.except.bind(this);
         if (p.mobile) {
             this.canvas.addEventListener('touchstart', this.touchStart.bind(this));
             this.canvas.addEventListener('touchmove', this.touchMove.bind(this));
@@ -202,11 +202,18 @@ p.View.Paint = p.View.Base.extend({
         this.filterView = new p.View.Filter(this.$container.find('.post-filter'),this);
         this.filterView.show();
     },
+    /*
+     * Der endpoint /api/paint/except wurde zum bannen verwendet.
+     * POST request mit nonce als parameter -> 24h ban
+     * this.except() wird gecallt wenn canvas.getContext() oder canvas.drawImage() aufgerufen wird
+     *
+    
     except: function() {
-        // FIXME: Wann kommt man je hier hin? Alternative zum paint Endpunkt?
         p.api.post('paint.except', {}, function() {});
         p.navigateTo('');
     },
+
+     */
     newDocument: function(width, height, type) {
         this.isAnimation = type === 'animation';
         this.$container.find('div.paint-container').toggleClass('animation', this.isAnimation);
