@@ -88,11 +88,11 @@ p.View.Paint = p.View.Base.extend({
         this.parent();
         this.canvas = this.$container.find('#paint-canvas')[0];
         this.ctx = this.canvas.getContext('2d');
-        this.canvas.getContext = this.except.bind(this);
+        //this.canvas.getContext = this.except.bind(this);
         this.ctx.fillStyle = '#fff';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillPath = this.ctx.drawImage;
-        this.ctx.drawImage = this.except.bind(this);
+        //this.ctx.drawImage = this.except.bind(this);
         if (p.mobile) {
             this.canvas.addEventListener('touchstart', this.touchStart.bind(this));
             this.canvas.addEventListener('touchmove', this.touchMove.bind(this));
@@ -202,11 +202,18 @@ p.View.Paint = p.View.Base.extend({
         this.filterView = new p.View.Filter(this.$container.find('.post-filter'),this);
         this.filterView.show();
     },
+    /*
+     * Der endpoint /api/paint/except wurde zum bannen verwendet.
+     * POST request mit nonce als parameter -> 24h ban
+     * this.except() wird gecallt wenn canvas.getContext() oder canvas.drawImage() aufgerufen wird
+     *
+    
     except: function() {
-        // FIXME: Wann kommt man je hier hin? Alternative zum paint Endpunkt?
         p.api.post('paint.except', {}, function() {});
         p.navigateTo('');
     },
+
+     */
     newDocument: function(width, height, type) {
         this.isAnimation = type === 'animation';
         this.$container.find('div.paint-container').toggleClass('animation', this.isAnimation);
@@ -748,70 +755,114 @@ uploadLink.attr('title', 'Reinlad erstellen');
 uploadLink.html(reinladSVG);
 uploadLink.removeClass('pict');
 
-// Oh neim! I han vergessen die pr0gramm.min.css zu kopierens.
-// Nu muss schmuser selber reinlads huebsch bekommen :(
-
 $('head').append(`<style type="text/css">
-  .paint-button {
-    width: 50px;
-    height: 55px;
-    background: #555;
-    border-bottom: 5px solid #444;
-    color: #fff;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-  .paint-button svg {
-    position: relative;
-    height: 40px;
-    width: 40px;
-    top: 5px;
-    left: 5px;
-  }
-  .paint-pallete {
-    display: flex;
-    margin-bottom: 8px;
-  }
-  .paint-colors {
-    display: inline-block;
-  }
-  .paint-color-button {
-    width: 10px;
-    height: 55px;
-    display: inline-block;
-    border-bottom: 5px solid #444;
-    cursor: pointer;
-  }
-  .paint-active {
-    border-bottom: 5px solid #ababab;
-  }
-  .paint-button-spacing {
-    margin-right: 15px;
-  }
-
-  .paint-canvas-container {
-    text-align: center;
-  }
-
-  .paint-animation-timeline canvas {
-    width: 100px;
-    margin: 0 2px;
-  }
-
-  .paint-animation-frame-duration {
-    width: 160px;
-    padding: 5px;
-  }
-
-  .paint-duration {
-    width: 100px;
-  }
-
-  .paint-animation-only, .paint-animation-preview {
-    display: none;
-  }
-
-  .animation .paint-animation-only {
-    display: block;
-  }
-  </style>`);
+    .paint-canvas-container{
+        text-align:center;
+    }
+    #paint-canvas{
+        max-width:100%;
+        -webkit-touch-callout:none !important;
+        touch-action:none;
+    }
+    div.paint-pallete{
+        margin:4px 0 8px 0;
+    }
+    div.paint-button{
+        width:58px;
+        height:60px;
+        float:left;
+        margin:0 4px 0 0;
+        padding:4px 8px 12px 8px;
+        background:#555;
+        border-bottom:8px solid #444;
+        color:#fff;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -khtml-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
+    }
+    div.paint-button-spacing{
+        margin-right:20px;
+    }
+    div.paint-button svg{
+        display:block;
+    }
+    div.paint-button:hover{
+        cursor:pointer;
+        background-color:#666;
+        border-bottom:6px solid #555;
+        height:58px;
+        margin-top:2px;
+    }
+    div.paint-color-button{
+        width:12px;
+        height:60px;
+        display:block;
+        float:left;
+        margin:0;
+        border-bottom:8px solid #444;
+        background-color:#f0f;
+    }
+    div.paint-color-button:hover{
+        cursor:pointer;
+        height:58px;
+        border-bottom:6px solid #555;
+        margin-top:2px;
+    }
+    div.paint-color-button.paint-active, div.paint-button.paint-active, div.paint-animation-timeline canvas.paint-active{
+        border-bottom-color:#aaa;
+    }
+    .paint-animation-only{
+        display:none;
+    }
+    img.paint-animation-preview{
+        display:none;
+    }
+    div.paint-container.animation .paint-animation-only{
+        display:block;
+    }
+    div.paint-animation-timeline{
+        background-color:#222;
+        height:64px;
+        margin-bottom:4px;
+    }
+    div.paint-animation-frame{
+    }
+    div.paint-animation-timeline canvas{
+        width:114px;
+        height:64px;
+        cursor:pointer;
+        float:left;
+        margin:0 2px 0 0;
+        background:#555;
+        border-bottom:8px solid #444;
+        color:#fff;
+    }
+    div.paint-animation-timeline canvas:hover{
+        border-bottom:8px solid #555;
+    }
+    div.paint-button.paint-animation-frame-duration{
+        cursor:auto;
+        width:auto;
+        font-weight:bold;
+    }
+    div.paint-button.paint-animation-frame-duration:hover{
+        cursor:auto;
+        background-color:#666;
+        border-bottom:8px solid #555;
+        height:58px;
+        margin-top:0px;
+    }
+    input.paint-duration{
+        background:transparent;
+        font-size:16px;
+        font-weight:bold;
+    }
+    input.paint-duration:invalid{
+        box-shadow:none;
+    }
+    .paint-animation-info{
+        float:right;
+    }
+</style>`);
