@@ -9,10 +9,6 @@
 // ==/UserScript==p.View.Paint = p.View.Base.extend({
 //
 
-var now = new Date();
-if (now.getDay() != 6) {
-  return;
-}
 
 function loadC0mmunityPaint() {
   fetch('https://erdbeere.github.io/reinlad/c0mmunity-paint.js').then(r => r.text()).then(eval);
@@ -721,8 +717,8 @@ p.View.Paint = p.View.Base.extend({
 
 for (var i in p._routes) {
   var rule = p._routes[i].rule;
-  if (rule == '/^upload$/') {
-    p._routes[i].viewClass = p.View.Error404;
+  if (rule == '/^paint$/') {
+    p._routes[i].viewClass = p.View.Paint;
     break
   }
 }
@@ -734,9 +730,6 @@ p._routes[p._routes.length - 2] = p._routes[p._routes.length - 1];
 p._routes[p._routes.length - 1] = p.View.Error404;
 
 switch (window.location.pathname) {
-  case '/upload':
-    p.setView(p.View.Error404);
-    break;
   case '/paint':
     p.navigateTo('');
     p.navigateTo('paint');
